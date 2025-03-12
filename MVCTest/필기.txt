@@ -1,0 +1,28 @@
+
+Servlet
+- 장점: 자바 기반
+- 단점: 클라이언트 코드 불편 
+
+JSP
+- 장점: HTML 기반
+- 단점: 자바 코드 불편
+
+Servlet + JSP > 비즈니스 코드와 프리젠테이션 코드를 분리!!!
+- 자바 코드 > Servlet에서 작성
+- 클라이언트 코드 > JSP에서 작성
+
+
+1. 새 프로젝트
+- New > Dynamic Web Project > "MVCTest" > Context Root("mvc"), web.xml 체크(O)
+
+
+
+
+
+
+
+
+
+
+
+
