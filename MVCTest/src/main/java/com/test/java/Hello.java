@@ -25,7 +25,7 @@ public class Hello extends HttpServlet {
         //pageContext.forward("/mvc/hello.jsp");
         
         //pageContext 역할
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/hello.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/hello.jsp");
         dispatcher.forward(req, resp);
  
     }
