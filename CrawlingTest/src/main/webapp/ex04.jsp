@@ -1,4 +1,4 @@
-<%@page import="com.test.java.Item"%>
+<%@page import="com.test.java.data.Item"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 
