@@ -1,0 +1,39 @@
+
+Ajax
+- Asynchronous JavaScript and XML
+- 비동기 자바스크립트 + XML
+- 자바스크립트를 사용해서 > 서버와 비동기 통신을 하는 기술(주고 받는 데이터의 형식이 XML이다.)
+- 클라이언트와 서버간의 XML 형식의 데이터를 주고 받는 자바스크립트 비동기 통신 기법
+- XMLHttpRequest 객체(= ajax 객체)를 사용한 통신
+- 구글맵
+- 사용자 편의성 대폭 향상(***)
+- 시스템 운용에 도움(트래픽 감소)
+
+
+
+1. 새 프로젝트
+- New > Dynamic Web Project
+    - "AjaxTest"
+    - Context Root("ajax")
+    - =web.xml 체크(O)
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
