@@ -12,32 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import com.test.java.model.AjaxDAO;
 import com.test.java.model.SurveyDTO;
 
-@WebServlet("/ex01.do")
-public class Ex01 extends HttpServlet {
-
+@WebServlet("/ex03data.do")
+public class Ex03Data extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //Ex01.java
+        //Ex03Data.java
         AjaxDAO dao = new AjaxDAO();
         List<SurveyDTO> list = dao.listSurvey();
         
         //req.setAttribute("list", list);
         req.setAttribute("dto", list.get(0));
-        req.getRequestDispatcher("/WEB-INF/views/ex01.jsp").forward(req, resp);
+        
+
+        req.getRequestDispatcher("/WEB-INF/views/ex03data.jsp").forward(req, resp);
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
