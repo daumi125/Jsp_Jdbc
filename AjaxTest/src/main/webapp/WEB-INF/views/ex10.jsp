@@ -53,6 +53,7 @@
                 success: function(result) {
                     
                     //console.log(result);
+                    $('#address1').html('');
                     
                     result.forEach(item => {
                         
@@ -75,6 +76,10 @@
             if (event.keyCode == 13) {
                 $('#btnSearch').click();
             }
+        });
+        
+        $('#address1').change(()=>{
+            $('#address2').focus();
         });
         
     </script>

@@ -65,15 +65,17 @@ public class AjaxDAO {
     }
 
     public String getJikwi(String txt1) {
+        
         try {
             
             String sql = "select jikwi from tblInsa where name = ?";
+            
             pstat = conn.prepareStatement(sql);
             pstat.setString(1, txt1);
             
             rs = pstat.executeQuery();
             
-            if(rs.next()) {
+            if (rs.next()) {
                 return rs.getString("jikwi");
             }
             
@@ -85,13 +87,16 @@ public class AjaxDAO {
     }
 
     public void updateBasicpay(String txt2) {
+        
         try {
+            
             String sql = "update tblInsa set basicpay = basicpay + 1000000 where name = ?";
+            
             pstat = conn.prepareStatement(sql);
             pstat.setString(1, txt2);
             
-            pstat.executeQuery();
-
+            pstat.executeUpdate();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,13 +104,17 @@ public class AjaxDAO {
     }
 
     public int checkId(String id) {
+        
         try {
+            
             String sql = "select count(*) as cnt from tblUser where id = ?";
+            
             pstat = conn.prepareStatement(sql);
             pstat.setString(1, id);
+            
             rs = pstat.executeQuery();
             
-            if(rs.next()) {
+            if (rs.next()) {
                 return rs.getInt("cnt");
             }
             
@@ -117,14 +126,19 @@ public class AjaxDAO {
     }
 
     public ArrayList<UserDTO> listUser() {
+        
         try {
+            
             String sql = "select * from tblUser";
+            
             rs = stat.executeQuery(sql);
             
             ArrayList<UserDTO> list = new ArrayList<UserDTO>();
             
-            while(rs.next()) {
+            while (rs.next()) {
+                
                 UserDTO dto = new UserDTO();
+                
                 dto.setId(rs.getString("id"));
                 dto.setPw(rs.getString("pw"));
                 dto.setName(rs.getString("name"));
@@ -143,9 +157,12 @@ public class AjaxDAO {
     }
 
     public ArrayList<ZipcodeDTO> listZipCode(String dong) {
+        
         try {
-            String sql = "select * from zipcode where dong like '%' || ? || '%'";
             
+            String sql = "select * from zipcode"
+                            + " where dong like '%' || ? || '%'";
+                            
             pstat = conn.prepareStatement(sql);
             pstat.setString(1, dong);
             
@@ -153,20 +170,156 @@ public class AjaxDAO {
             
             ArrayList<ZipcodeDTO> list = new ArrayList<ZipcodeDTO>();
             
-            while(rs.next()) {
+            while (rs.next()) {
+                //레코드 1줄 > DTO 1개
                 ZipcodeDTO dto = new ZipcodeDTO();
+                
                 dto.setSeq(rs.getString("seq"));
-                dto.setZipcode(rs.getString("zipcode"));
                 dto.setSido(rs.getString("sido"));
                 dto.setGugun(rs.getString("gugun"));
-                dto.setBunji(rs.getString("bunji"));
                 dto.setDong(rs.getString("dong"));
+                dto.setBunji(rs.getString("bunji"));
+                dto.setZipcode(rs.getString("zipcode"));
                 
+                list.add(dto);                      
+            }
+            
+            return list;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+
+    public int add(CatDTO dto) {
+        
+        try {
+            
+            String sql = "insert into tblCat (catid, src, x, y) values (?, ?, 0, 0)";
+            pstat = conn.prepareStatement(sql);
+            pstat.setString(1, dto.getCatid());
+            pstat.setString(2, dto.getSrc());
+            
+            return pstat.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return 0;
+    }
+
+    public int getMaxCatId() {
+        
+        try {
+            
+            String sql = "select max(to_number(catid)) as catid from tblCat";
+            
+            rs = stat.executeQuery(sql);
+            
+            if (rs.next()) {
+                return rs.getInt("catid");
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return 0;
+    }
+
+    public int edit(CatDTO dto) {
+        
+        try {
+            
+            String sql = "update tblCat set x = ?, y = ? where catid = ?";
+            
+            pstat = conn.prepareStatement(sql);
+            pstat.setString(1, dto.getX());
+            pstat.setString(2, dto.getY());
+            pstat.setString(3, dto.getCatid());
+            
+            return pstat.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return 0;
+    }
+
+    public ArrayList<CatDTO> listCat() {
+        
+        try {
+            
+            String sql = "select * from tblCat order by to_number(catid) asc";
+            
+            rs = stat.executeQuery(sql);
+            
+            ArrayList<CatDTO> list = new ArrayList<CatDTO>();
+            
+            while (rs.next()) {
+                CatDTO dto = new CatDTO();
+                dto.setCatid(rs.getString("catid"));
+                dto.setSrc(rs.getString("src"));
+                dto.setX(rs.getString("x"));
+                dto.setY(rs.getString("y"));
                 list.add(dto);
             }
             
             return list;
             
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+
+    public int addAddress(AddressDTO dto) {
+        try {
+            
+            String sql = "insert into tblAddress (seq, name, age, gender, tel, address, regdate) values (seqAddress.nextVal, ?,?,?,?,?,default)";
+            pstat = conn.prepareStatement(sql);
+            pstat.setString(1, dto.getName());
+            pstat.setString(2, dto.getAge());
+            pstat.setString(3, dto.getGender());
+            pstat.setString(4, dto.getTel());
+            pstat.setString(5, dto.getAddress());
+            
+            return pstat.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return 0;
+    }
+
+    public ArrayList<AddressDTO> listAddress() {
+        try {
+            String sql = "select * from tblAddress order by seq desc";
+            
+            rs = stat.executeQuery(sql);
+            
+            ArrayList<AddressDTO> list = new ArrayList<>();
+            
+            while (rs.next()) {
+                AddressDTO dto = new AddressDTO();
+                dto.setSeq(rs.getString("seq"));
+                dto.setAddress(rs.getString("address"));
+                dto.setAge(rs.getString("age"));
+                dto.setGender(rs.getString("gender"));
+                dto.setName(rs.getString("name"));
+                dto.setRegdate(rs.getString("regdate"));
+                dto.setTel(rs.getString("tel"));
+                
+                list.add(dto);
+            }
+            
+            return list;
             
         } catch (Exception e) {
             e.printStackTrace();
